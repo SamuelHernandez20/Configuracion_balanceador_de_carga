@@ -89,8 +89,12 @@ wp rewrite structure '/%postname%/' \
 
 # reescritura
 
-a2enmod rewrite
+sed -i "/COLLATE/a \$_SERVER['HTTPS'] = 'on';" /var/www/html/wp-config.php
 
 cp /home/ubuntu/practica01-09/htaccess/.htaccess /var/www/html/
+
+a2enmod rewrite
+
+systemctl restart apache2
 
 chown -R www-data:www-data /var/www/html
