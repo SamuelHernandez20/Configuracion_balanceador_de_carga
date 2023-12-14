@@ -137,3 +137,4 @@ Reiniciamos el servicio nfs del servidor
 ````
 systemctl restart nfs-kernel-server
 ````
+# 3. Configuración de los clientes NFS:
