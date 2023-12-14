@@ -165,5 +165,22 @@ Previo a la tirada del **deployFrontend.sh**, procederé a ejecutar los scripts 
 
 Desde el `install_lamp_backend.sh`:
 
+Instalo el SGBD de MySQL:
+
+````
+apt install mysql-server -y
+````
+
+configuro MySQL  para que acepete conxiones desde la ip privada:
+
+````
+sed -i "s/127.0.0.1/$MYSQL_PRIVATE/" /etc/mysql/mysql.conf.d/mysqld.cnf
+````
+
+Reiniciamos servicio
+
+````
+systemctl restart mysql
+````
 
 
