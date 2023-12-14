@@ -160,5 +160,10 @@ echo "$IP_NFS:/var/www/html /var/www/html  nfs auto,nofail,noatime,nolock,intr,t
 ````
 # 3. Configuración del Backend:
 
-Previo a la tirada del **deployFrontend.sh**, procederé a ejecutar los scripts que conciernen a la instalación del backend y el despliegue de la base de datos (**install_lamp_backend.sh** y ** deployBackend.sh**).
+Previo a la tirada del **deployFrontend.sh**, procederé a ejecutar los scripts que conciernen a la instalación del backend y el despliegue de la base de datos (**install_lamp_backend.sh** y 
+**deployBackend.sh**).
+
+Desde el `install_lamp_backend.sh`:
+
+
 
