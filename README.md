@@ -22,6 +22,12 @@ La arquitectura de estas máquinas virtuales, se destinarán para los siguientes
 ├── conf
 │   ├── load-balancer.conf
 │   └── 000-default.conf
+├── exports
+│   ├── exports
+├── htaccess
+│   ├── .htaccess
+├── php
+│   ├── index.php
 └── scripts
     ├── .env
     ├── install_load_balancer.sh
