@@ -183,7 +183,8 @@ Reiniciamos servicio
 systemctl restart mysql
 ````
 Desde el `deployBackend.sh`
-Procedo a crear la base de datos de la cual tendrán acceso los frontales, configurando la ip del cliente para la subred: $IP_CLIENTE_MYSQL = 172
+
+Procedo a crear la base de datos de la cual tendrán acceso los frontales, configurando la ip del cliente para la subred: `$IP_CLIENTE_MYSQL = 172.31.%`
 ````
 mysql -u root <<< "DROP DATABASE IF EXISTS $WORDPRESS_DB_NAME"
 mysql -u root <<< "CREATE DATABASE $WORDPRESS_DB_NAME"
