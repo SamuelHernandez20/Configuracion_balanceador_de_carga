@@ -158,4 +158,7 @@ Para que la unidad se monte automaticamente, y con los >> me añade al final en 
 ````
 echo "$IP_NFS:/var/www/html /var/www/html  nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" >> /etc/fstab
 ````
+# 3. Configuración del Backend:
+
+Previo a la tirada del **deployFrontend.sh**, procederé a ejecutar los scripts que conciernen a la instalación del backend y el despliegue de la base de datos (**install_lamp_backend.sh** y ** deployBackend.sh**).
 
