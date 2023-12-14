@@ -192,4 +192,120 @@ mysql -u root <<< "DROP USER IF EXISTS $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
 mysql -u root <<< "CREATE USER $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD'"
 mysql -u root <<< "GRANT ALL PRIVILEGES ON $WORDPRESS_DB_NAME.* TO $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
 ````
+# 3. Despliegue del Wordpress:
+
+Desde cualquiera de los servidores frontales, ya que comparten recursos del **/var/www/html**, se procede con la ejecución del script que nos despliega el Wordpress de forma automatizada, haciendo uso de la utilidad **wp-cli**:
+
+Eliminar descargas previas:
+
+````
+rm -rf /tmp/wp-cli.phar 
+````
+Descargamos utilidad wp-cli:
+
+````
+wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp
+````
+Permisos de ejecución al archivo:
+
+````
+chmod +x /tmp/wp-cli.phar
+````
+Movemos la utlidad y de esta forma lo podemos usar sin poner la ruta completa:
+
+````
+mv /tmp/wp-cli.phar /usr/local/bin/wp
+````
+Eliminamos instalaciones previas del Wordpress:
+
+````
+rm -rf /var/www/html/*
+````
+Descargamos el código fuente de Wordpress en **/var/www/html**
+
+````
+wp core download --locale=es_ES --path=/var/www/html --allow-root
+````
+
+Procedo con la creación del archivo de configuración de la base de datos, donde se estará haciendo uso de las variables que se lanzaron previamente en el **Backend**, y haciendo estebleciendo su **dirección ip privada** como **host** de la **base de datos**:
+
+````
+wp config create \
+  --dbname=$WORDPRESS_DB_NAME \
+  --dbuser=$WORDPRESS_DB_USER \
+  --dbpass=$WORDPRESS_DB_PASSWORD \
+  --dbhost=$WORDPRESS_DB_HOST \
+  --path=/var/www/html \
+  --allow-root
+````
+Una vez que tenemos la base de datos creada y el archivo de configuración preparado podemos realizar la instalación de WordPress, donde será importante establecer en el dominio el del balanceador que es el que va a estar distribuyendo la carga entre ambos frontales:
+
+````
+wp core install \
+  --url=$dominio \
+  --title="$WORDPRESS_TITLE" \
+  --admin_user=$WORDPRESS_ADMIN\
+  --admin_password=$WORDPRESS_PASS \
+  --admin_email=$WORDPRESS_email \
+  --path=/var/www/html \
+  --allow-root
+````
+Actualizacion:
+
+````
+wp core update --path=/var/www/html --allow-root
+````
+Instalamos un tema:
+
+````
+wp theme install sydney --activate --path=/var/www/html --allow-root
+````
+Instalamos un algunos plugins:
+
+````
+wp plugin update --path=/var/www/html --all --allow-root
+````
+Instalamos el plugin bbpress:
+
+````
+wp plugin install bbpress --activate --path=/var/www/html --allow-root
+````
+````
+wp plugin install wps-hide-login --activate --path=/var/www/html --allow-root
+````
+Nombre de la entrada
+````
+wp rewrite structure '/%postname%/' \
+  --path=/var/www/html \
+  --allow-root
+````
+Para que el **HTTPS** funcione de manera correcta, habrá que establecer la variable a **on**, definiendola justo debajo de **COLLATE**, aunque puede estar en cualquier sitio del archivo de configuración:
+
+````
+sed -i "/COLLATE/a \$_SERVER['HTTPS'] = 'on';" /var/www/html/wp-config.php
+````
+Para que la reescritura de URL se aplique correctamente copiaremos el **.htaccess**, y se procede a habilitar mediante el comando **a2enmod rewrite**.
+
+````
+cp ../htaccess/.htaccess /var/www/html/
+````
+Será importante incluir la ejecución de este comando en el frontal opuesto al que se haya tirado el despliegue del Wordpress, para que la **reescritura de URLS** se aplique de forma existosa y no se reciba el error **404**.
+
+````
+a2enmod rewrite
+````
+````
+systemctl restart apache2
+````
+````
+chown -R www-data:www-data /var/www/html
+````
+
+
+
+
+
+
+
+
 
