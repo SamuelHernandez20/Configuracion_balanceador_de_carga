@@ -28,6 +28,10 @@ La arquitectura de estas máquinas virtuales, se destinarán para los siguientes
     ├── install_lamp_frontend.sh
     ├── install_lamp_backend.sh
     ├── setup_letsencrypt_https.sh
-    └── deploy.sh
+    └── deployFrontend.sh
+    └── deployBackend.sh
+    └── servidor_nfs.sh
+    └── cliente_nfs.sh
+
 ````
 
