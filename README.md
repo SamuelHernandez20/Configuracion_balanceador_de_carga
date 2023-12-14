@@ -138,3 +138,21 @@ Reiniciamos el servicio nfs del servidor
 systemctl restart nfs-kernel-server
 ````
 # 3. Configuración de los clientes NFS:
+
+Instalación de paquetes necesarios en el cliente NFS:
+
+````
+apt install nfs-common -y
+````
+
+Montaje de la carpeta estableciendo la ip privada del servidor NFS:
+
+````
+mount $IP_NFS:/var/www/html /var/www/html
+````
+Para que la unidad se monte automaticamente, y con los >> me añade al final en el /etc/fstab
+
+````
+echo "$IP_NFS:/var/www/html /var/www/html  nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" >> /etc/fstab
+````
+
