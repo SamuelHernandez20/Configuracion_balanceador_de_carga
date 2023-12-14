@@ -139,6 +139,9 @@ systemctl restart nfs-kernel-server
 ````
 # 3. Configuración de los clientes NFS:
 
+Desde las 2 máquinas frontales se deberá de realizar la ejecución de este script **cliente_nfs.sh**, para que se monte en ambas máquinas la **carpeta compartida** del **servidor NFS**.
+Tras realizarlo podemos comprobar el montaje mediante el comando `df -h`.
+
 Instalación de paquetes necesarios en el cliente NFS:
 
 ````
