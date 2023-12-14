@@ -103,4 +103,8 @@ Reiniciamos:
 ````
 systemctl restart apache2
 ````
+Tras ello procedí a tirar desde la máquina del balanceador el **setup_letsencrypt_https.sh**, para tener configurado el **SSL** y posteriormente la navegación por **HTTPS** se produzca correctamente desde los frontales, aparte de ciertas configuraciones adicionales.
+
+# 2. Configuración del Servidor NFS:
+
 
