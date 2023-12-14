@@ -108,3 +108,32 @@ Tras ello procedí a tirar desde la máquina del balanceador el **setup_letsencr
 # 2. Configuración del Servidor NFS:
 
 
+Se procede con la instalación del nfsserver:
+
+````
+apt install nfs-kernel-server -y
+````
+Creamos el directorio que queremos compartir entre las máquinas frontales:
+
+````
+mkdir -p /var/www/html
+````
+
+Damos permisos especiales:
+
+````
+chown nobody:nogroup /var/www/html
+````
+Copiamos el archivo exports hacia la ruta correspondiente, el cual nos permitirá establecer los permisos para la carpeta compartida, para la subred privada de los frontales:
+
+````
+cp ../exports/exports /etc/exports
+````
+````
+sed -i "s#NFS_FRONTEND_NETWORK#$NFS_FRONTEND_NETWORK#" /etc/exports
+````
+
+Reiniciamos el servicio nfs del servidor 
+````
+systemctl restart nfs-kernel-server
+````
