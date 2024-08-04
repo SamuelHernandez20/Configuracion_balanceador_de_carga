@@ -1,4 +1,4 @@
-# Practica-01-11
+
 En este Práctica había que implementar nuevamente un balanceador de carga, pero esta vez la arquitectura consta de las siguientes **máquinas virtuales**:
 
 1. Balanceador.
